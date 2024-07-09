@@ -36,9 +36,9 @@ with DAG(
         task_id="choose_best_model", python_callable=_choose_best_model
     )
 
-    accurate = BashOperator(task_id="is_accurate", bash_command="echo 'accurate'")
+    is_accurate = BashOperator(task_id="is_accurate", bash_command="echo 'accurate'")
 
-    inaccurate = BashOperator(
+    is_inaccurate = BashOperator(
         task_id="is_inaccurate", bash_command=" echo 'inaccurate'"
     )
 

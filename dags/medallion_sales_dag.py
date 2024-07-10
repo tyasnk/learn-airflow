@@ -1,13 +1,15 @@
 from airflow import DAG
 from airflow.providers.databricks.operators.databricks import DatabricksRunNowOperator
 from airflow.utils.dates import days_ago
+from datetime import datetime
 
 default_args = {"owner": "airflow"}
 
 with DAG(
     "medallion_sales_dag",
-    start_date=days_ago(2),
-    schedule_interval=None,
+    start_date=datetime(2023, 1, 1),
+    schedule_interval="@daily",
+    catchup=False,
     default_args=default_args,
 ) as dag:
 
@@ -16,7 +18,9 @@ with DAG(
     )
 
     data_structure_creation = DatabricksRunNowOperator(
-        task_id="data_structure_creation", databricks_conn_id="databricks_default", job_id=179527302079419
+        task_id="data_structure_creation",
+        databricks_conn_id="databricks_default",
+        job_id=179527302079419,
     )
 
     mount >> data_structure_creation
